@@ -1,3 +1,13 @@
 [
-    
+    {
+        "name": "Wiki DevSE",
+        "assets": {
+            "80x15": "devsewiki.png"
+        },
+        "protocols": {
+            "http": {
+                "clearnet": "https://devse.wiki/"
+            }
+        }
+    }
 ]

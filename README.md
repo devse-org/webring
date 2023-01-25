@@ -8,7 +8,7 @@ entry example:
         "80x15": "name.png",
         "88x31": "name.gif"
     },
-    "protocol": {
+    "protocols": {
         "http": {
             "clearnet": "https://name.devse/",
             "onion": "http://xxxxx.onion",
@@ -37,7 +37,7 @@ type network = {
     ?i2p: string option;
 }
 
-type protocol = {
+type protocols = {
     http: network;
     ?gemini: network option;
     ?gopher: network option;
@@ -48,7 +48,7 @@ type protocol = {
 type entry = {
     name: string;
     ?assets: assets option;
-    protocol: protocol;
+    protocols: protocols;
 }
 
 ```
