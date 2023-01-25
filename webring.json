@@ -1,6 +1,7 @@
 [
     {
         "name": "Wiki DevSE",
+        "description": "TODO",
         "assets": {
             "80x15": "devsewiki.png"
         },

@@ -1,25 +1,19 @@
 # webring
 
 entry example:
-```
-{
-    "name": "Site name",
-    "assets": {
-        "80x15": "name.png",
-        "88x31": "name.gif"
-    },
-    "protocols": {
-        "http": {
-            "clearnet": "https://name.devse/",
-            "onion": "http://xxxxx.onion",
-            "i2p": "http://xxxxx.i2p"
+```json
+    {
+        "name": "Wiki DevSE",
+        "description": "",
+        "assets": {
+            "80x15": "devsewiki.png"
         },
-        "gemini": "gemini://name.devse/",
-        "gopher": "gopher://name.devse/",
-        "ipfs": "ipfs://xxx",
-        "freenet": "XXXXXXXX"
+        "protocols": {
+            "http": {
+                "clearnet": "https://devse.wiki/"
+            }
+        }
     }
-}
 ```
 
 spec:
@@ -47,6 +41,7 @@ type protocols = {
 
 type entry = {
     name: string;
+    description: string;
     ?assets: assets option;
     protocols: protocols;
 }
