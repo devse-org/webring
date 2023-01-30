@@ -1,0 +1,1 @@
+const devse_webring_current_url = "https://devse.wiki/";

@@ -3,6 +3,10 @@ body {
 	font-size: 130%;
 }
 
+table {
+	width: 100%;
+}
+
 th {
 	font-weight: bold;
 	background-color: #d9d9d9;
