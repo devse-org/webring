@@ -1,0 +1,45 @@
+body {
+	font-family: monospace;
+	font-size: 130%;
+}
+
+th {
+	font-weight: bold;
+	background-color: #d9d9d9;
+}
+
+td, th {
+	border-bottom: 1px solid #000000;
+	border-right: 1px solid #000000;
+}
+
+td {
+	vertical-align: bottom;
+	padding: 2px 3px;
+	
+}
+
+tr > td:first-child {
+	border-left: 1px solid #000000;
+}
+
+thead > tr:first-child > th {
+	border-top: 1px solid #000000;
+}
+
+thead > tr:first-child > th:first-child {
+	border-left: 1px solid #000000;
+}
+
+pre {
+	background-color: gainsboro;
+}
+
+.page {
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+
+	padding: 1.5em calc(1em + 1vw);
+	max-width: 1000px;
+	margin: 0 auto 0;
+}
