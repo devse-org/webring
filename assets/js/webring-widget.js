@@ -29,8 +29,6 @@ const devse_webring = (url) => {
     let element = document.getElementById("devse-webring");
     let member_id = devse_webring_find_member(url);
 
-    console.log(member_id);
-
     if (member_id >= 0) {
         const network = devse_webring_get_network(url);
         const random = devse_webring_list[Math.floor(Math.random() * devse_webring_list.length)];
