@@ -11,6 +11,11 @@ th {
 td, th {
 	border-bottom: 1px solid #000000;
 	border-right: 1px solid #000000;
+}
+
+td {
+	vertical-align: bottom;
+	padding: 2px 3px;
 	
 }
 
@@ -24,4 +29,17 @@ thead > tr:first-child > th {
 
 thead > tr:first-child > th:first-child {
 	border-left: 1px solid #000000;
+}
+
+pre {
+	background-color: gainsboro;
+}
+
+.page {
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+
+	padding: 1.5em calc(1em + 1vw);
+	max-width: 1000px;
+	margin: 0 auto 0;
 }
