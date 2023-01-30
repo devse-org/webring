@@ -1,19 +1,13 @@
 # webring
 
 entry example:
-```json
-    {
-        "name": "Wiki DevSE",
-        "description": "",
-        "assets": {
-            "80x15": "devsewiki.png"
-        },
-        "protocols": {
-            "http": {
-                "clearnet": "https://devse.wiki/"
-            }
-        }
-    }
+```scm
+    ((name  . "Wiki DevSE")
+	 (description . "French documentation on the creation of operating systems")
+	 (assets
+	  (80x15 . "devsewiki.png"))
+	 (protocols
+	  (http (clearnet . "https://devse.wiki/"))))
 ```
 
 spec:

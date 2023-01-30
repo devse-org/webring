@@ -13,18 +13,14 @@ jobs:
       - uses: actions/checkout@v3
         name: Checkout
 
-      - name: Guix cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/guix
-          key: guix-cache-${{ github.sha }}
-          restore-keys: |
-            guix-cache-
       - name: Install Guix
-        uses: PromyLOPh/guix-install-action@v1
+        run: |
+          sudo apt update
+          sudo apt upgrade
+          sudo apt install guix
 
       - name: Generate
-        run: guix shell -C -m manifest.scm -- haunt build
+        run: guix environment -C -m manifest.scm -- haunt build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
