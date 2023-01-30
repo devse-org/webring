@@ -35,15 +35,10 @@ const devse_webring = (url) => {
         const network = devse_webring_get_network(url);
         const random = devse_webring_list[Math.floor(Math.random() * devse_webring_list.length)];
 
-        random_url = devse_webring_get_url_with_fallback(random, network);
+        const random_url = devse_webring_get_url_with_fallback(random, network);
 
         const next = devse_webring_list[(member_id + 1) % devse_webring_list.length];
-        let prev;
-        if ((member_id - 1) < 0) {
-            prev = devse_webring_list[devse_webring_list.length - 1];
-        } else {
-            prev = devse_webring_list[member_id - 1];
-        }
+        const prev = (member_id - 1) < 0 ? devse_webring_list[devse_webring_list.length - 1] : devse_webring_list[member_id - 1];
 
         const next_url = devse_webring_get_url_with_fallback(next, network);
         const prev_url = devse_webring_get_url_with_fallback(prev, network);
