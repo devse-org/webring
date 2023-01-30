@@ -9,53 +9,33 @@
  (haunt builder assets)
  (haunt builder blog)
  (haunt builder atom)
- (haunt reader skribe))
+ (haunt reader skribe)
+ (webring))
 
 (define %website-title
   "DevSE webring")
 
-(define %webring-json
-  (call-with-input-file "webring.json" get-string-all))
-
-(format #t "~a ~%" %webring-json)
-
-(define-json-type <network>
-  (clearnet)
-  (onion)
-  (i2p))
-
-(define-json-type <protocols>
-  (http "http" <network>)
-  (gemini)
-  (gopher)
-  (ipfs)
-  (freenet))
-
-(define-json-type <assets>
-  (badge "80x15")
-  (button "88x31"))
-
-(define-json-type <entry>
-  (name)
-  (description)
-  (assets "assets" <assets>)
-  (protocols "protocols" <protocols>))
-
-(format #t "~s ~%" (json-string->scm %webring-json))
-
-(define (page-template site body)
+(define* (page-template site body #:key title)
   `((doctype html)
 	(head
 	 (meta (@ (charset "utf-8")))
-	 (title %website-title))
-	(body 
-	 (div ,body))))
+	 (title ,(if title
+				 (string-append title " -- DevSE")
+				 (site-title site)))
+	 (body 
+	  (div ,body)))))
 
 (define (index-page site posts)
   (make-page
    "index.html"
    (page-template site `(p "soon"))
    sxml->html))
+
+(define (webring-json-page site posts)
+  (make-page
+   "webring.json"
+   site-list
+   scm->json))
 
 (site #:title %website-title
 	  #:domain "//webring.devse.wiki"
@@ -64,4 +44,5 @@
       #:readers (list skribe-reader)
 	  #:builders (list
 				  index-page
+				  webring-json-page
 				  (static-directory "assets")))
