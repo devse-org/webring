@@ -3,6 +3,10 @@ body {
 	font-size: 130%;
 }
 
+table {
+	width: 100%;
+}
+
 th {
 	font-weight: bold;
 	background-color: #d9d9d9;
@@ -16,7 +20,6 @@ td, th {
 td {
 	vertical-align: bottom;
 	padding: 2px 3px;
-	
 }
 
 tr > td:first-child {

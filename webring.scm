@@ -9,10 +9,10 @@
 	 (protocols
 	  (http (clearnet . "https://devse.wiki/"))))
     ((name . "BRUTAL")
-     (description . "The BRUTAL Operating system")
+     (description . "The BRUTAL operating system")
      (protocols
       (http (clearnet . "https://brutal.smnx.sh/"))))
     ((name . "skiftOS")
      (description . "The skift operating system")
 	 (protocols
-	  (http ("clearnet" . "https://skiftos.org/"))))))
+	  (http (clearnet . "https://skiftos.org/"))))))

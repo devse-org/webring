@@ -39,7 +39,12 @@
 				 (string-append title " -- DevSE")
 				 (site-title site)))
 	 (body
-	  (div (@ (class "page")) ,body)))))
+	  (div (@ (class "page"))
+		   ,body
+		   (div (@ (id "devse-webring")))
+		   (script (@ (src "/assets/js/config.js")))
+		   (script (@ (src "/assets/js/webring-index.js")))
+		   (script (@ (src "/assets/js/webring-widget.js"))))))))
 
 (define (http-entry name http)
   (let* ((clearnet (assoc-ref http 'clearnet))
@@ -95,10 +100,10 @@
 (define (raw-script-entry url)
   (format #f "<script src=~s />~%" url))
 
-(define site-widget
+(define site-raw-widget
   `((h3 "Widget")
 	(pre (code
-		  ,(format #f "<div class=~s ></div>~%~%" "devse-webring")
+		  ,(format #f "<div id=~s ></div>~%~%" "devse-webring")
 		  ,(raw-script-entry "/assets/js/webring-index.js")
 		  ,(raw-script-entry "/assets/js/webring-widget.js")))))
 
@@ -110,7 +115,7 @@
 					,last-update
 					(p (a (@ (href "/webring.json")) "webring.json"))
 					,site-table
-					,site-widget))
+					,site-raw-widget))
    sxml->html))
 
 (define (webring-json-page site posts)
@@ -122,7 +127,7 @@
 (define (webring-index-js site posts)
   (make-page
    "/assets/js/webring-index.js"
-   "var devseWebringList = [];"
+   (format #f "const devse_webring_list = ~a;" (scm->json-string site-list))
    display))
 
 (site #:title "DevSE webring directory"
