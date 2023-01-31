@@ -36,6 +36,12 @@ thead > tr:first-child > th:first-child {
 
 pre {
 	background-color: gainsboro;
+	padding: 4px 6px;
+}
+
+pre, code {
+	font-size: 100%;
+	font-family: monospace;
 }
 
 .page {
@@ -45,4 +51,16 @@ pre {
 	padding: 1.5em calc(1em + 1vw);
 	max-width: 1000px;
 	margin: 0 auto 0;
+}
+
+#devse-webring {
+	text-align: center;
+}
+
+#devse-webring > ul {
+	list-style: none;
+}
+
+#devse-webring > ul > li {
+	display: inline;
 }
