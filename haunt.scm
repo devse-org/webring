@@ -25,26 +25,36 @@
 (define ipfs-icon
   (simple-icon "ipfs"))
 
+(define i2p-icon
+  `(img (@
+		 (height 16)
+		 (width 16)
+		 (src "https://upload.wikimedia.org/wikipedia/commons/8/84/Itoopie.svg"))))
+
 (define* (stylesheet url)
   `(link (@ (rel "stylesheet")
 			(href ,url))))
 
 (define* (page-template site body #:key title)
-  `((doctype html)
+  `((doctype "html")
 	(head
 	 (meta (@ (charset "utf-8")))
+	 (meta (@ (http-equiv "Content-Language") (content "en")))
+	 (meta (@ (name "viewport") (content "width=device-width")))
 	 ,(stylesheet "https://unpkg.com/normalize.css@8.0.1/normalize.css")
 	 ,(stylesheet "/assets/css/style.css")
 	 (title ,(if title
 				 (string-append title " -- DevSE")
 				 (site-title site)))
+	 (link (@ (rel "shortcut icon")
+			  (href "/favicon.ico"))))
 	 (body
 	  (div (@ (class "page"))
 		   ,body
 		   (div (@ (id "devse-webring")))
 		   (script (@ (src "/assets/js/config.js")))
 		   (script (@ (src "/assets/js/webring-index.js")))
-		   (script (@ (src "/assets/js/webring-widget.js"))))))))
+		   (script (@ (src "/assets/js/webring-widget.js")))))))
 
 (define (http-entry name http)
   (let* ((clearnet (assoc-ref http 'clearnet))
@@ -53,6 +63,9 @@
 	`((a (@ (href ,clearnet)) ,name)
 		 ,(if onion
 			  `(a (@ (href ,onion)) ,tor-icon)
+			  '())
+		 ,(if i2p
+			  `(a (@ (href ,i2p)) ,i2p-icon)
 			  '()))))
  
 (define (assets-entry assets)

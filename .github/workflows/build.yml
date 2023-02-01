@@ -20,7 +20,9 @@ jobs:
           sudo apt install guix
 
       - name: Generate
-        run: guix environment -C -m manifest.scm -- haunt build
+        run: |
+          guix environment -C -m manifest.scm -- haunt build
+          cp favicon.ico site/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
