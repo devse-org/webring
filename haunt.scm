@@ -37,24 +37,29 @@
 
 (define* (page-template site body #:key title)
   `((doctype "html")
-	(head
-	 (meta (@ (charset "utf-8")))
-	 (meta (@ (http-equiv "Content-Language") (content "en")))
-	 (meta (@ (name "viewport") (content "width=device-width")))
-	 ,(stylesheet "https://unpkg.com/normalize.css@8.0.1/normalize.css")
-	 ,(stylesheet "/assets/css/style.css")
-	 (title ,(if title
-				 (string-append title " -- DevSE")
-				 (site-title site)))
-	 (link (@ (rel "shortcut icon")
-			  (href "/favicon.ico"))))
-	 (body
-	  (div (@ (class "page"))
-		   ,body
-		   (div (@ (id "devse-webring")))
-		   (script (@ (src "/assets/js/config.js")))
-		   (script (@ (src "/assets/js/webring-index.js")))
-		   (script (@ (src "/assets/js/webring-widget.js")))))))
+	(html (@ (lang "en"))
+		  (head
+		   (meta (@ (charset "utf-8")))
+		   (meta (@ (http-equiv "Content-Language") (content "en")))
+		   (meta (@ (name "viewport") (content "width=device-width")))
+		   ,(stylesheet "https://unpkg.com/normalize.css@8.0.1/normalize.css")
+		   ,(stylesheet "/assets/css/style.css")
+		   (title ,(if title
+					   (string-append title " -- DevSE")
+					   (site-title site)))
+		   (link (@ (rel "shortcut icon")
+					(href "/favicon.ico"))))
+		  (body
+		   (div (@
+				 (class "page")
+				 (role "main"))
+				,body
+				(div (@
+					  (id "devse-webring")
+					  (role "nav")))
+				(script (@ (src "/assets/js/config.js")))
+				(script (@ (src "/assets/js/webring-index.js")))
+				(script (@ (src "/assets/js/webring-widget.js"))))))))
 
 (define (http-entry name http)
   (let* ((clearnet (assoc-ref http 'clearnet))
@@ -68,16 +73,20 @@
 			  `(a (@ (href ,i2p)) ,i2p-icon)
 			  '()))))
  
-(define (assets-entry assets)
+(define (assets-entry name assets)
   (let ((80x15 (assoc-ref assets '80x15))
 		(88x31 (assoc-ref assets '88x31)))
 	`((td
 	   ,(if 80x15
-			`(img (@ (src ,(string-append "/assets/80x15/" 80x15))))
+			`(img (@
+				   (src ,(string-append "/assets/80x15/" 80x15))
+				   (alt ,(string-append name " button"))))
 			'()))
 	  (td
 	   ,(if 88x31
-			`(img (@ (src ,(string-append "/assets/88x31/" 88x31))))
+			`(img (@
+				   (src ,(string-append "/assets/88x31/" 88x31))
+				   (alt ,(string-append name " banner"))))
 			'())))))
 
 (define (site-entry entry)
@@ -93,7 +102,7 @@
 			 `(a (@ (href ,ipfs)) ,ipfs-icon)
 			 '()))
 	(td ,description)
-	,(assets-entry assets))))
+	,(assets-entry name assets))))
 
 (define last-update
   `(p ,(format #f "Last update: ~a" (date->string (current-date) "~4"))))
@@ -114,7 +123,7 @@
   (format #f "<script src=~s />~%" url))
 
 (define site-raw-widget
-  `((h3 "Widget")
+  `((h2 "Widget")
 	(pre (code
 		  ,(format #f "<div id=~s ></div>~%~%" "devse-webring")
 		  ,(raw-script-entry "/assets/js/webring-index.js")
