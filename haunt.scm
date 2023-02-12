@@ -65,12 +65,12 @@
   (let* ((clearnet (assoc-ref http 'clearnet))
 		 (onion (assoc-ref http 'onion))
 		 (i2p (assoc-ref http 'i2p)))
-	`((a (@ (href ,clearnet)) ,name)
+	`((a (@ (href ,clearnet) (target "_blank")) ,name)
 		 ,(if onion
-			  `(a (@ (href ,onion)) ,tor-icon)
+			  `(a (@ (href ,onion) (target "_blank")) ,tor-icon)
 			  '())
 		 ,(if i2p
-			  `(a (@ (href ,i2p)) ,i2p-icon)
+			  `(a (@ (href ,i2p) (target "_blank")) ,i2p-icon)
 			  '()))))
  
 (define (assets-entry name assets)
@@ -99,7 +99,7 @@
   `(tr
 	(td ,(http-entry name http)
 		,(if ipfs
-			 `(a (@ (href ,ipfs)) ,ipfs-icon)
+			 `(a (@ (href ,ipfs) (target "_blank")) ,ipfs-icon)
 			 '()))
 	(td ,description)
 	,(assets-entry name assets))))
