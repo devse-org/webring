@@ -15,4 +15,8 @@
     ((name . "skiftOS")
      (description . "The skift operating system")
 	 (protocols
-	  (http (clearnet . "https://skiftos.org/"))))))
+	  (http (clearnet . "https://skiftos.org/"))))
+    ((name . "cyp blog")
+     (description . "Cyp personal blog and website")
+     (protocols
+      (http (clearnet . "https://cyp.sh/")))) ))
