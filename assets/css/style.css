@@ -53,6 +53,17 @@ pre, code {
 	margin: 0 auto 0;
 }
 
+figcaption {
+	text-align: center;
+}
+
+.eww {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
 #devse-webring {
 	text-align: center;
 }
