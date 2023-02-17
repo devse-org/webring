@@ -6,10 +6,12 @@
  (haunt site)
  (haunt html)
  (haunt page)
+ (haunt reader)
  (haunt builder assets)
  (haunt builder blog)
  (haunt builder atom)
  (haunt reader commonmark)
+ (srfi srfi-1)
  (srfi srfi-19)
  (webring))
 
@@ -141,6 +143,28 @@
 					,site-raw-widget))
    sxml->html))
 
+(define (page->sxml site template path)
+  (define reader
+	(or (find (lambda (reader)
+				(reader-match? reader path))
+			  (site-readers site))
+		(error "No reader found for file:" path)))
+  (define-values (file-metadata file-sxml)
+	((reader-proc reader) path))
+  (template site file-sxml #:title (assoc-ref file-metadata 'title)))
+
+(define (docs-join-page site posts)
+  (make-page
+   "docs/how-to-join.html"
+   (page->sxml site page-template "docs/how_to_join.md")
+   sxml->html))
+
+(define (docs-coc-page site posts)
+  (make-page
+   "docs/code-of-conduct.html"
+   (page->sxml site page-template "docs/CODE_OF_CONDUCT.md")
+   sxml->html))
+
 (define (404-page site posts)
   (make-page
    "404.html"
@@ -173,6 +197,8 @@
       #:readers (list commonmark-reader)
 	  #:builders (list
 				  index-page
+				  docs-join-page
+				  docs-coc-page
 				  404-page
 				  webring-json-page
 				  webring-index-js
