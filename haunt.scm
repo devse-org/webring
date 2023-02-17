@@ -9,7 +9,7 @@
  (haunt builder assets)
  (haunt builder blog)
  (haunt builder atom)
- (haunt reader skribe)
+ (haunt reader commonmark)
  (srfi srfi-19)
  (webring))
 
@@ -123,7 +123,7 @@
   (format #f "<script src=~s />~%" url))
 
 (define site-raw-widget
-  `((h2 "Widget")
+  `((h2 (@ (id "widget")) "Widget")
 	(pre (code
 		  ,(format #f "<div id=~s ></div>~%~%" "devse-webring")
 		  ,(raw-script-entry "/assets/js/webring-index.js")
@@ -135,9 +135,23 @@
    (page-template site
 				  `((h1 "DevSE webring directory")
 					,last-update
-					(p (a (@ (href "/webring.json")) "webring.json"))
+					(p "You can download " (a (@ (href "/webring.json")) "raw data (in json)") " and adapt it to your web/gopher site, or include our " (a (@ (href "#widget")) "tiny widget") " that you can customize using css")
+					(p "If you want to join us, please read " (a (@ (href "/docs/how-to-join.html")) "this guide"))
 					,site-table
 					,site-raw-widget))
+   sxml->html))
+
+(define (404-page site posts)
+  (make-page
+   "404.html"
+   (page-template site
+				  `((h1 "404 - Eww ! You are not supposed to be here.")
+					(figure
+							(img (@
+								  (class "eww")
+								  (src "/assets/devsechan/eww.png")
+								  (alt "DevSE-chan eww")))
+							(figcaption (small "(c) Meaxy Kusama")))))
    sxml->html))
 
 (define (webring-json-page site posts)
@@ -156,9 +170,10 @@
 	  #:domain "//webring.devse.wiki"
 	  #:default-metadata '(
 						   (author . "DevSE contributors"))
-      #:readers (list skribe-reader)
+      #:readers (list commonmark-reader)
 	  #:builders (list
 				  index-page
+				  404-page
 				  webring-json-page
 				  webring-index-js
 				  (static-directory "assets")))
