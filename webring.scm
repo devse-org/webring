@@ -19,4 +19,10 @@
     ((name . "cyp blog")
      (description . "Cyp personal blog and website")
      (protocols
-      (http (clearnet . "https://cyp.sh/")))) ))
+      (http (clearnet . "https://cyp.sh/"))))
+	((name . "QDNix")
+	 (description . "Quick'n'dirty *NIX")
+	 (assets
+	  (88x31 . "qdnix.gif"))
+	 (protocols
+	  (http (clearnet . "https://qdnix.d0p1.eu/")))) ))
