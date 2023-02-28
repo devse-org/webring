@@ -1,4 +1,6 @@
 (use-modules
+ (syntax-highlight)
+ (syntax-highlight xml)
  (ice-9 textual-ports)
  (ice-9 streams)
  (json)
@@ -127,9 +129,12 @@
 (define site-raw-widget
   `((h2 (@ (id "widget")) "Widget")
 	(pre (code
-		  ,(format #f "<div id=~s ></div>~%~%" "devse-webring")
-		  ,(raw-script-entry "/assets/js/webring-index.js")
-		  ,(raw-script-entry "/assets/js/webring-widget.js")))))
+		  ,(highlights->sxml
+			(highlight lex-xml
+					   (string-append
+						(format #f "<div id=~s ></div>~%~%" "devse-webring")
+						(raw-script-entry "/assets/js/webring-index.js")
+						(raw-script-entry "/assets/js/webring-widget.js"))))))))
 
 (define (index-page site posts)
   (make-page
