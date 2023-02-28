@@ -94,3 +94,16 @@ figcaption {
 		overflow-y: scroll;
 	}
 }
+
+.syntax-element {
+	color: #0000FF;
+	font-weight: bold;
+}
+
+.syntax-attribute {
+	color: #B8860B;
+}
+
+.syntax-string {
+	color: #880000;
+}
