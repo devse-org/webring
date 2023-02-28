@@ -1,8 +1,10 @@
 (use-modules
  (syntax-highlight)
  (syntax-highlight xml)
+ (syntax-highlight scheme)
  (ice-9 textual-ports)
  (ice-9 streams)
+ (ice-9 match) 
  (json)
  (haunt asset)
  (haunt site)
@@ -38,6 +40,19 @@
 (define* (stylesheet url)
   `(link (@ (rel "stylesheet")
 			(href ,url))))
+
+
+(define (syntax-highlight sxml)
+  (match sxml
+		 (('code ('@ ('class "language-scheme")) snippet)
+		  `(code ,(highlights->sxml
+				   (highlight lex-scheme snippet))))
+		 ((tag ('@ attributes ...) body ...)
+		  `(,tag (@ ,@attributes) ,@(map syntax-highlight body)))
+		 ((tag body ...)
+		  `(,tag ,@(map syntax-highlight body)))
+		 ((? string? str)
+		  str)))
 
 (define* (page-template site body #:key title)
   `((doctype "html")
@@ -156,7 +171,7 @@
 		(error "No reader found for file:" path)))
   (define-values (file-metadata file-sxml)
 	((reader-proc reader) path))
-  (template site file-sxml #:title (assoc-ref file-metadata 'title)))
+  (template site (syntax-highlight file-sxml) #:title (assoc-ref file-metadata 'title)))
 
 (define (docs-join-page site posts)
   (make-page
