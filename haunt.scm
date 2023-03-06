@@ -17,6 +17,7 @@
  (haunt reader commonmark)
  (srfi srfi-1)
  (srfi srfi-19)
+ (web uri)
  (webring))
 
 (define (simple-icon name)
@@ -47,6 +48,9 @@
 		 (('code ('@ ('class "language-scheme")) snippet)
 		  `(code ,(highlights->sxml
 				   (highlight lex-scheme snippet))))
+		 (('code ('@ ('class "language-html")) snippet)
+		  `(code ,(highlights->sxml
+				   (highlight lex-xml snippet))))
 		 ((tag ('@ attributes ...) body ...)
 		  `(,tag (@ ,@attributes) ,@(map syntax-highlight body)))
 		 ((tag body ...)
@@ -73,6 +77,7 @@
 				 (class "page")
 				 (role "main"))
 				,body
+				(hr)
 				(div (@
 					  (id "devse-webring")
 					  (role "nav")))
@@ -142,14 +147,20 @@
   (format #f "<script src=~s />~%" url))
 
 (define site-raw-widget
-  `((h2 (@ (id "widget")) "Widget")
-	(pre (code
-		  ,(highlights->sxml
-			(highlight lex-xml
-					   (string-append
-						(format #f "<div id=~s ></div>~%~%" "devse-webring")
-						(raw-script-entry "/assets/js/webring-index.js")
-						(raw-script-entry "/assets/js/webring-widget.js"))))))))
+  (syntax-highlight
+   `((h2 (@ (id "widget")) "Widget")
+	 (pre
+	  (code (@ (class "language-html"))
+			 ,(string-append
+			   (format #f "<div id=~s ></div>~%~%" "devse-webring")
+			   (raw-script-entry "/assets/js/webring-index.js")
+			   (raw-script-entry "/assets/js/webring-widget.js"))))
+	 (p "Without Javascript ?")
+	 (pre (code (@ (class "language-html"))
+				,(format #f
+						 "<a href=~s>previous</a>~%<a href=~s>next</a>~%"
+						 "https://webring.devse.wiki/your.site.host/prev"
+						 "https://webring.devse.wiki/your.site.host/next"))))))
 
 (define (index-page site posts)
   (make-page
@@ -210,16 +221,49 @@
    (format #f "const devse_webring_list = ~a;" (scm->json-string site-list))
    display))
 
+(define (redirect target)
+  `((doctype "html")
+	(html
+	 (head
+	  (meta (@ (http-equiv "refresh")
+			   (content ,(string-append "0; url=" target)))))
+	 (body
+	  (h1 "Redirecting to "
+		  (a (@ (href ,target)) ,target))))))
+
+(define (entry->host entry)
+  (let* ((protocols (assoc-ref entry 'protocols))
+		 (http (assoc-ref protocols 'http))
+		 (clearnet (assoc-ref http 'clearnet)))
+	(uri-host (string->uri clearnet))))
+
+(define (page-next entry)
+  (lambda (site posts)
+	(make-page
+	 (string-append "/" (entry->host entry) "/next.html")
+	 (redirect "/")
+	 sxml->html)))
+
+(define (page-prev entry)
+  (lambda (site posts)
+	(make-page
+	 (string-append "/" (entry->host entry) "/prev.html")
+	 (redirect "/")
+	 sxml->html)))
+
 (site #:title "DevSE webring directory"
 	  #:domain "//webring.devse.wiki"
 	  #:default-metadata '(
 						   (author . "DevSE contributors"))
       #:readers (list commonmark-reader)
-	  #:builders (list
-				  index-page
-				  docs-join-page
-				  docs-coc-page
-				  404-page
-				  webring-json-page
-				  webring-index-js
-				  (static-directory "assets")))
+	  #:builders (append
+				  (list
+				   index-page
+				   docs-join-page
+				   docs-coc-page
+				   404-page
+				   webring-json-page
+				   webring-index-js
+				   (static-directory "assets"))
+				  (map page-next (array->list site-list))
+				  (map page-prev (array->list site-list))))
