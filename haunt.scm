@@ -231,25 +231,44 @@
 	  (h1 "Redirecting to "
 		  (a (@ (href ,target)) ,target))))))
 
-(define (entry->host entry)
+(define (entry->url entry)
   (let* ((protocols (assoc-ref entry 'protocols))
 		 (http (assoc-ref protocols 'http))
 		 (clearnet (assoc-ref http 'clearnet)))
-	(uri-host (string->uri clearnet))))
+	clearnet))
+
+(define (entry->host entry)
+	(uri-host (string->uri (entry->url entry))))
+
+(define (find-next entry idx)
+  (if (eq? (array-ref site-list idx) entry)
+	  (if (eq? (+ idx 1) (array-length site-list))
+		  (array-ref site-list 0)
+		  (array-ref site-list (+ idx 1)))
+	  (find-next entry (+ idx 1))))
 
 (define (page-next entry)
-  (lambda (site posts)
-	(make-page
-	 (string-append "/" (entry->host entry) "/next.html")
-	 (redirect "/")
-	 sxml->html)))
+  (let* ((next (find-next entry 0)))
+	(lambda (site posts)
+	  (make-page
+	   (string-append "/" (entry->host entry) "/next.html")
+	   (redirect (entry->url next))
+	   sxml->html))))
+
+(define (find-prev entry idx)
+  (if (eq? (array-ref site-list idx) entry)
+	  (if (eq? idx 0)
+		  (array-ref site-list (- (array-length site-list) 1))
+		  (array-ref site-list (- idx 1)))
+	  (find-prev entry (+ idx 1))))
 
 (define (page-prev entry)
-  (lambda (site posts)
-	(make-page
-	 (string-append "/" (entry->host entry) "/prev.html")
-	 (redirect "/")
-	 sxml->html)))
+  (let* ((prev (find-prev entry 0)))
+	(lambda (site posts)
+	  (make-page
+	   (string-append "/" (entry->host entry) "/prev.html")
+	   (redirect (entry->url prev))
+	   sxml->html))))
 
 (site #:title "DevSE webring directory"
 	  #:domain "//webring.devse.wiki"
