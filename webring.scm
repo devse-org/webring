@@ -25,4 +25,12 @@
 	 (assets
 	  (88x31 . "qdnix.gif"))
 	 (protocols
-	  (http (clearnet . "https://qdnix.d0p1.eu/")))) ))
+	  (http (clearnet . "https://qdnix.d0p1.eu/"))))
+     ((name . "Lou !'s site")
+     (description . "Lou ! personal website, sometimes a working search engine")
+     (protocols
+      (http (clearnet . "https://habert.me/"))))
+     ((name . "Smooth Projects")
+     (description . "A simple project manager")
+     (protocols
+      (http (clearnet . "https://smoop.carbonlab.dev/"))))))
