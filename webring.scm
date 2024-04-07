@@ -33,4 +33,8 @@
      ((name . "Smooth Projects")
      (description . "A simple project manager")
      (protocols
-      (http (clearnet . "https://smoop.carbonlab.dev/"))))))
+      (http (clearnet . "https://smoop.carbonlab.dev/"))))
+	 ((name . "Fukuro")
+	  (description . "A highly portable microkernel")
+	  (protocols
+	   (http (clearnet . "https://fukuro.dev"))))))
