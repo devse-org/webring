@@ -34,7 +34,10 @@
      (description . "A simple project manager")
      (protocols
       (http (clearnet . "https://smoop.carbonlab.dev/"))))
-	 ((name . "Fukuro")
-	  (description . "A highly portable microkernel")
+	 ((name . "StupidOS")
+	  (description . "32-bit Operating System written in x86 assembly.")
+    (assets
+	   (88x31 . "stupidos.png")
+     (80x15 . "stupidos.png"))
 	  (protocols
-	   (http (clearnet . "https://fukuro.dev"))))))
+	   (http (clearnet . "https://stupidos.d0p1.eu"))))))
