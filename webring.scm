@@ -45,4 +45,8 @@
 	  (description . "Systeme d'Exploitation approximativement Complet")
 	  (protocols
 	   (http (clearnet . "https://n-lg.github.io/seac"))))
-        ))
+	 ((name . "Rheydskey's website")
+	  (description . "Mon site personnel avec un blog un peu vide :3")
+	  (protocols
+	   (http (clearnet . "https://rheydskey.org"))))  	 
+))
