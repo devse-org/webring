@@ -40,4 +40,9 @@
 	   (88x31 . "stupidos.png")
      (80x15 . "stupidos.png"))
 	  (protocols
-	   (http (clearnet . "https://stupidos.d0p1.eu"))))))
+	   (http (clearnet . "https://stupidos.d0p1.eu"))))
+    	 ((name . "SEaC")
+	  (description . "Systeme d'Exploitation approximativement Complet")
+	  (protocols
+	   (http (clearnet . "https://n-lg.github.io/seac"))))
+        ))
