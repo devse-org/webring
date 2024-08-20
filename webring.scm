@@ -49,4 +49,8 @@
 	  (description . "Mon site personnel avec un blog un peu vide :3")
 	  (protocols
 	   (http (clearnet . "https://rheydskey.org"))))  	 
+	 ((name . "Keyb's website")
+	  (description . "Le petit site web perso de Keyb ^_^")
+	  (protocols
+	   (http (clearnet . "https://keyb.moe"))))
 ))
