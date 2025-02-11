@@ -53,4 +53,12 @@
 	  (description . "Le petit site web perso de Keyb ^_^")
 	  (protocols
 	   (http (clearnet . "https://keyb.moe"))))
+	 ((name . "Clem")
+     	 (description . "I am a software engineer and I love building things like operating systems, compilers, tools, and web engines.")
+     	 (protocols
+     	  (http (clearnet . "https://smnx.sh/"))))
+     ((name . "Mathilde411")
+          	 (description . "J'aime bien l'informatique, et je fais des choses assez variées... parfois.'")
+          	 (protocols
+          	  (http (clearnet . "https://mathilde411.fr/"))))
 ))
