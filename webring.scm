@@ -44,11 +44,13 @@
     	 ((name . "SEaC")
 	  (description . "Systeme d'Exploitation approximativement Complet")
 	  (protocols
-	   (http (clearnet . "https://n-lg.github.io/seac"))))
+	   (http (clearnet . "https://n-lg.github.io/seac")))
+	  (assets
+	   (88x31 . "seac.gif")))
 	 ((name . "Rheydskey's website")
 	  (description . "Mon site personnel avec un blog un peu vide :3")
 	  (protocols
-	   (http (clearnet . "https://rheydskey.org"))))  	 
+	   (http (clearnet . "https://rheydskey.org"))))
 	 ((name . "Keyb's website")
 	  (description . "Le petit site web perso de Keyb ^_^")
 	  (protocols
